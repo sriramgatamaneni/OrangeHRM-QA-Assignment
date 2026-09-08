@@ -276,6 +276,4 @@ This project strictly implements the **Page Object Model (POM)**:
 
 ```text
 GitHub Repository:
-[ADD GITHUB URL HERE]
-```
-*(Add your remote GitHub repository URL above before final submission).*
+https://github.com/sriramgatamaneni/OrangeHRM-QA-Assignment
