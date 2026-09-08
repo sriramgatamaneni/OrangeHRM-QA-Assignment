@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest cache
+.pytest_cache/
+Automation/.pytest_cache/
+
+# Environments
+venv/
+env/
+ENV/
+.env
+
+# Automation logs
+Automation/logs/*.log
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
