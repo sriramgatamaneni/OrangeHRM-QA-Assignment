@@ -14,6 +14,11 @@ class EmployeePage(BasePage):
     SUCCESS_TOAST = (By.CSS_SELECTOR, ".oxd-toast-content")
     PERSONAL_DETAILS_HEADER = (By.XPATH, "//h6[contains(text(), 'Personal Details')]")
     ADD_EMPLOYEE_HEADING = (By.XPATH, "//h6[contains(text(), 'Add Employee')]")
+    FORM_LOADER = (By.CSS_SELECTOR, ".oxd-form-loader")
+
+    def wait_for_form_loader_to_disappear(self, timeout: int = 10) -> bool:
+        """Explicitly waits for the OrangeHRM form loader overlay to disappear."""
+        return self.wait_for_invisibility(self.FORM_LOADER, timeout=timeout)
 
     def enter_first_name(self, first_name: str):
         """Enters the employee's first name."""
@@ -38,7 +43,9 @@ class EmployeePage(BasePage):
         return elem.get_attribute("value")
 
     def click_save(self):
-        """Clicks the Save button on the Add Employee form."""
+        """Clicks the Save button on the Add Employee form after ensuring loader is gone."""
+        self.logger.info("Waiting for form loader overlay to clear before clicking Save")
+        self.wait_for_form_loader_to_disappear()
         self.logger.info("Clicking Save button")
         self.click(self.SAVE_BUTTON)
 
@@ -48,12 +55,14 @@ class EmployeePage(BasePage):
         saves the record, and waits for successful persistence.
         Returns the saved Employee ID.
         """
+        self.wait_for_form_loader_to_disappear()
         self.find_element(self.FIRST_NAME_INPUT)
         self.enter_first_name(first_name)
         if middle_name:
             self.enter_middle_name(middle_name)
         self.enter_last_name(last_name)
         
+        self.wait_for_form_loader_to_disappear()
         assigned_id = emp_id or self.get_employee_id()
         if emp_id:
             self.enter_employee_id(emp_id)

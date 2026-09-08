@@ -15,6 +15,7 @@ class EmployeeListPage(BasePage):
     RESET_BUTTON = (By.CSS_SELECTOR, "button[type='reset']")
     TABLE_CARDS = (By.CSS_SELECTOR, ".oxd-table-card")
     LOADING_SPINNER = (By.CSS_SELECTOR, ".oxd-loading-spinner")
+    FORM_LOADER = (By.CSS_SELECTOR, ".oxd-form-loader")
     NO_RECORDS_BANNER = (By.XPATH, "//*[contains(text(), 'No Records Found')]")
     AUTOCOMPLETE_OPTION = (By.CSS_SELECTOR, ".oxd-autocomplete-option")
 
@@ -27,9 +28,9 @@ class EmployeeListPage(BasePage):
         self.wait_for_table_loaded()
 
     def wait_for_table_loaded(self):
-        """Waits for loading spinner to disappear and table to settle."""
-        self.wait_for_invisibility(self.LOADING_SPINNER, timeout=8)
-        time.sleep(1)
+        """Waits for loading spinner and form loader overlay to disappear."""
+        self.wait_for_invisibility(self.LOADING_SPINNER, timeout=10)
+        self.wait_for_invisibility(self.FORM_LOADER, timeout=10)
 
     def reset_search_filters(self):
         """Clicks the Reset button to clear all search fields."""
